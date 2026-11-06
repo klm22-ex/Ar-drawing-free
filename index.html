@@ -17,7 +17,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f8fc;font:15px system-ui,-apple-system,sans-serif}
 header{padding:18px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:20px;margin:0}header small{color:var(--muted)}
 main{max-width:900px;margin:auto;padding:10px 14px 32px}.tabs{display:flex;gap:8px;overflow:auto;padding:8px 0 14px}.tab,button,.filebtn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:12px;padding:11px 14px;font:inherit;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--accent);border-color:var(--accent)}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.stage{position:relative;background:#05080d;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:grid;place-items:center}.stage video,.stage canvas,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage #video{object-fit:cover}.stage #overlay{pointer-events:none;transform-origin:center center;max-width:100%;max-height:100%}.stage canvas{touch-action:none}.stage .placeholder{color:var(--muted);text-align:center;padding:20px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}.controls label{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px}.controls input[type=range]{width:110px}.controls input[type=color]{width:38px;height:36px;border:0;background:none}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tile{background:#202d42;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:left;color:white}.tile b{display:block;margin-bottom:5px}.tile span{color:var(--muted);font-size:13px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.stage{position:relative;background:#05080d;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:grid;place-items:center}.stage video,.stage canvas,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage #video{object-fit:cover}.stage #overlay{pointer-events:none;transform-origin:center center;max-width:100%;max-height:100%}.stage canvas{touch-action:none}.stage .placeholder{color:var(--muted);text-align:center;padding:20px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}.controls label{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px}.controls input[type=range]{width:110px}.controls input[type=color]{width:38px;height:36px;border:0;background:none}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tile{background:#202d42;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:left;color:white}.tile b{display:block;margin-bottom:5px}.tile span{color:var(--muted);font-size:13px}.template-preview{display:block;width:100%;height:118px;object-fit:contain;background:#fff;border-radius:9px;margin-bottom:9px}.lesson-art{background:#fff;border-radius:12px;min-height:220px;display:grid;place-items:center;padding:12px}.lesson-art svg{width:100%;max-width:300px;height:220px}.lesson-track{height:7px;background:#26354a;border-radius:10px;overflow:hidden;margin:14px 0}.lesson-track div{height:100%;width:25%;background:var(--accent);transition:width .2s}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
@@ -25,9 +25,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
 <body>
 <header><div><h1>✏️ AR Drawing Free</h1><small>Apprends à dessiner, étape par étape</small></div><small>Version 1.0</small></header>
 <main>
-<nav class="tabs"><button class="tab active" data-page="home">Accueil</button><button class="tab" data-page="camera">Caméra AR</button><button class="tab" data-page="draw">Dessin libre</button><button class="tab" data-page="learn">Apprendre</button></nav>
+<nav class="tabs"><button class="tab active" data-page="home">Accueil</button><button class="tab" data-page="camera">Caméra AR</button><button class="tab" data-page="models">Modèles</button><button class="tab" data-page="draw">Dessin libre</button><button class="tab" data-page="learn">Apprendre</button></nav>
 <section id="home" class="page">
-<div class="panel"><h2>Bienvenue 👋</h2><p>Utilise une image comme modèle, observe-la à travers ta caméra et trace les contours. Tu peux aussi dessiner librement et enregistrer ton travail.</p><div class="grid"><button class="tile" data-go="camera"><b>📷 Caméra AR</b><span>Afficher un modèle devant la caméra</span></button><button class="tile" data-go="draw"><b>🖌️ Dessin libre</b><span>Créer un dessin sur une feuille</span></button><button class="tile" data-go="learn"><b>🎓 Leçons</b><span>Conseils pour commencer</span></button></div></div>
+<div class="panel"><h2>Bienvenue 👋</h2><p>Utilise une image comme modèle, observe-la à travers ta caméra et trace les contours. Tu peux aussi dessiner librement et enregistrer ton travail.</p><div class="grid"><button class="tile" data-go="camera"><b>📷 Caméra AR</b><span>Afficher un modèle devant la caméra</span></button><button class="tile" data-go="draw"><b>🖌️ Dessin libre</b><span>Créer un dessin sur une feuille</span></button><button class="tile" data-go="learn"><b>🎓 Leçons</b><span>Conseils pour commencer</span></button><button class="tile" data-go="models"><b>🗂️ Modèles</b><span>Choisir un dessin à tracer</span></button></div></div>
 <div class="panel"><h3>Choisir une image modèle</h3><p>Importe une photo ou un dessin depuis ton téléphone.</p><label class="filebtn">📁 Importer une image<input id="homeFile" type="file" accept="image/*" hidden></label><p id="fileStatus" style="color:var(--muted)">Aucune image sélectionnée.</p></div>
 </section>
 <section id="camera" class="page hidden"><div class="panel"><h2>Caméra AR</h2><div class="stage" id="cameraStage"><div class="placeholder" id="camHint">Lance la caméra puis importe ton modèle.</div><video id="video" autoplay playsinline muted></video><img id="overlay" class="hidden" alt="Image modèle"></div>
@@ -42,8 +42,16 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
 <label class="filebtn">Importer modèle<input id="camFile" type="file" accept="image/*" hidden></label>
 </div>
 <p id="cameraStatus" role="status" style="color:var(--muted);font-size:13px">La caméra nécessite HTTPS ou localhost et une autorisation du navigateur. La lampe dépend du téléphone.</p></div></section>
+<section id="models" class="page hidden"><div class="panel"><h2>Bibliothèque de modèles</h2><p>Ces dessins vectoriels ont été créés pour AR Drawing Free. Choisis un modèle pour l’afficher sur la caméra.</p><div class="grid">
+<button class="tile" data-model="./models/house.svg" data-label="Maison"><img class="template-preview" src="./models/house.svg" alt="Maison"><b>Maison</b><span>Formes simples</span></button>
+<button class="tile" data-model="./models/cat.svg" data-label="Chat"><img class="template-preview" src="./models/cat.svg" alt="Chat"><b>Chat</b><span>Visage et contours</span></button>
+<button class="tile" data-model="./models/flower.svg" data-label="Fleur"><img class="template-preview" src="./models/flower.svg" alt="Fleur"><b>Fleur</b><span>Pétales et tige</span></button>
+<button class="tile" data-model="./models/butterfly.svg" data-label="Papillon"><img class="template-preview" src="./models/butterfly.svg" alt="Papillon"><b>Papillon</b><span>Symétrie</span></button>
+<button class="tile" data-model="./models/fish.svg" data-label="Poisson"><img class="template-preview" src="./models/fish.svg" alt="Poisson"><b>Poisson</b><span>Courbes et nageoires</span></button>
+<button class="tile" data-model="./models/tree.svg" data-label="Arbre"><img class="template-preview" src="./models/tree.svg" alt="Arbre"><b>Arbre</b><span>Volumes et feuillage</span></button>
+</div></div></section>
 <section id="draw" class="page hidden"><div class="panel"><h2>Dessin libre</h2><div class="stage" style="background:#fff;aspect-ratio:4/3"><canvas id="paper"></canvas></div><div class="controls"><label>Couleur <input id="color" type="color" value="#202020"></label><label>Épaisseur <input id="brush" type="range" min="1" max="30" value="4"></label><button id="erase">Gomme</button><button id="undo">Annuler</button><button id="clear">Effacer</button><button class="primary" id="save">Enregistrer PNG</button></div></div></section>
-<section id="learn" class="page hidden"><div class="panel"><h2>Petites leçons</h2><ol><li><b>Commence par les formes :</b> cercle, carré, triangle et lignes simples.</li><li><b>Observe les proportions :</b> repère la hauteur et la largeur de ton modèle.</li><li><b>Trace doucement :</b> commence par les contours avant les détails.</li><li><b>Travaille les ombres :</b> varie la pression et l’épaisseur des traits.</li><li><b>Entraîne-toi régulièrement :</b> 10 à 15 minutes par jour suffisent pour progresser.</li></ol></div></section>
+<section id="learn" class="page hidden"><div class="panel"><h2>Leçon guidée : dessiner une maison</h2><p>Avance à ton rythme. Chaque étape ajoute quelques traits au dessin.</p><div id="lessonArt" class="lesson-art" aria-label="Illustration de l’étape"></div><small id="lessonCount" style="color:var(--muted)"></small><h3 id="lessonTitle"></h3><p id="lessonText"></p><div class="lesson-track"><div id="lessonProgress"></div></div><div class="controls"><button id="lessonPrev">Précédent</button><button class="primary" id="lessonNext">Étape suivante</button></div></div></section>
 </main><footer>AR Drawing Free · Projet indépendant d’apprentissage du dessin.</footer>
 <script>
 const pages=[...document.querySelectorAll('.page')],tabs=[...document.querySelectorAll('.tab')];
@@ -52,6 +60,13 @@ tabs.forEach(t=>t.onclick=()=>go(t.dataset.page));document.querySelectorAll('[da
 let modelUrl=null;const overlay=document.getElementById('overlay');
 function loadImage(file){if(!file)return;if(modelUrl)URL.revokeObjectURL(modelUrl);modelUrl=URL.createObjectURL(file);overlay.src=modelUrl;overlay.classList.remove('hidden');document.getElementById('fileStatus').textContent=file.name;updateOverlay();}
 document.getElementById('homeFile').onchange=e=>loadImage(e.target.files[0]);document.getElementById('camFile').onchange=e=>loadImage(e.target.files[0]);
+function loadModel(url,label){
+  if(modelUrl){URL.revokeObjectURL(modelUrl);modelUrl=null;}
+  overlay.src=url;overlay.classList.remove('hidden');updateOverlay();
+  document.getElementById('fileStatus').textContent='Modèle choisi : '+label;
+  go('camera');
+}
+document.querySelectorAll('[data-model]').forEach(button=>button.addEventListener('click',()=>loadModel(button.dataset.model,button.dataset.label)));
 function updateOverlay(){
   const x=document.getElementById('posX').value, y=document.getElementById('posY').value;
   const z=document.getElementById('scale').value/100, r=document.getElementById('rotation').value;
@@ -117,6 +132,26 @@ document.getElementById('save').onclick=()=>{
     document.body.appendChild(a);a.click();a.remove();
   }catch(err){alert('Impossible de préparer le PNG sur cet appareil.');}
 };
+const lessonSteps=[
+  {title:'1. Les grandes formes',text:'Dessine d’abord un grand carré pour le corps de la maison et un triangle pour le toit. Ne cherche pas encore les détails.',art:'<svg viewBox="0 0 300 220" role="img"><path d="M55 105 L150 35 L245 105 M75 95 V190 H225 V95" fill="none" stroke="#202020" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+  {title:'2. Les ouvertures',text:'Ajoute une porte au milieu et deux fenêtres. Essaie de garder des dimensions régulières.',art:'<svg viewBox="0 0 300 220" role="img"><path d="M55 105 L150 35 L245 105 M75 95 V190 H225 V95 M130 190 V130 H170 V190 M95 115 H125 V145 H95 Z M175 115 H205 V145 H175 Z" fill="none" stroke="#202020" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+  {title:'3. Les petits détails',text:'Trace les carreaux des fenêtres, la poignée de porte et une ligne de sol. Repasse légèrement les contours.',art:'<svg viewBox="0 0 300 220" role="img"><path d="M55 105 L150 35 L245 105 M75 95 V190 H225 V95 M130 190 V130 H170 V190 M95 115 H125 V145 H95 Z M175 115 H205 V145 H175 Z M110 115 V145 M95 130 H125 M190 115 V145 M175 130 H205 M160 158 V161 M45 191 H255" fill="none" stroke="#202020" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
+  {title:'4. Ombres et finition',text:'Ajoute quelques hachures sous le toit et sur un côté. Efface les traits de construction trop visibles et signe ton dessin.',art:'<svg viewBox="0 0 300 220" role="img"><path d="M55 105 L150 35 L245 105 M75 95 V190 H225 V95 M130 190 V130 H170 V190 M95 115 H125 V145 H95 Z M175 115 H205 V145 H175 Z M110 115 V145 M95 130 H125 M190 115 V145 M175 130 H205 M160 158 V161 M45 191 H255 M83 87 L94 95 M96 77 L107 86 M109 68 L120 77 M185 78 L196 87 M198 88 L209 97" fill="none" stroke="#202020" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
+];
+let lessonIndex=0;
+function renderLesson(){
+  const step=lessonSteps[lessonIndex];
+  document.getElementById('lessonArt').innerHTML=step.art;
+  document.getElementById('lessonCount').textContent='Étape '+(lessonIndex+1)+' sur '+lessonSteps.length;
+  document.getElementById('lessonTitle').textContent=step.title;
+  document.getElementById('lessonText').textContent=step.text;
+  document.getElementById('lessonProgress').style.width=((lessonIndex+1)/lessonSteps.length*100)+'%';
+  document.getElementById('lessonPrev').disabled=lessonIndex===0;
+  document.getElementById('lessonNext').textContent=lessonIndex===lessonSteps.length-1?'Recommencer':'Étape suivante';
+}
+document.getElementById('lessonPrev').onclick=()=>{lessonIndex=Math.max(0,lessonIndex-1);renderLesson();};
+document.getElementById('lessonNext').onclick=()=>{lessonIndex=lessonIndex===lessonSteps.length-1?0:lessonIndex+1;renderLesson();};
+renderLesson();
 if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
   window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }

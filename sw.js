@@ -1,5 +1,5 @@
-const CACHE_NAME = "ar-drawing-free-v2";
-const APP_FILES = ["./","./index.html","./manifest.webmanifest","./icons/icon-180.png","./icons/icon-192.png","./icons/icon-512.png"];
+const CACHE_NAME = "ar-drawing-free-v3";
+const APP_FILES = ["./","./index.html","./manifest.webmanifest","./icons/icon-180.png","./icons/icon-192.png","./icons/icon-512.png","./models/house.svg","./models/cat.svg","./models/flower.svg","./models/butterfly.svg","./models/fish.svg","./models/tree.svg"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)).then(() => self.skipWaiting()));
 });
