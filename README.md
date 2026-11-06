@@ -9,6 +9,7 @@ Application web gratuite et indépendante pour apprendre à dessiner à partir d
 - Caméra arrière via l'autorisation du navigateur.
 - Commande de lampe : elle ne fonctionne que si le téléphone et le navigateur exposent la fonction torche.
 - Dessin libre avec couleur, épaisseur, gomme, annulation (jusqu'à 50 étapes) et export PNG.
+- Calque photo pour portraits : importer une photo de la galerie, tracer sur un calque transparent, régler l'opacité, masquer/réafficher ou retirer la référence. L'export PNG contient le dessin sur fond blanc, sans la photo de référence.
 - Six modèles SVG originaux créés pour ce projet : maison, chat, fleur, papillon, poisson et arbre.
 - Leçon interactive en quatre étapes pour dessiner une maison.
 - Base PWA : manifeste, icônes et cache hors ligne.
