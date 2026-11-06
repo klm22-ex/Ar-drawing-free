@@ -1,4 +1,4 @@
-const CACHE_NAME = "ar-drawing-free-v4";
+const CACHE_NAME = "ar-drawing-free-v5";
 const APP_FILES = ["./","./index.html","./manifest.webmanifest","./icons/icon-180.png","./icons/icon-192.png","./icons/icon-512.png","./models/house.svg","./models/cat.svg","./models/flower.svg","./models/butterfly.svg","./models/fish.svg","./models/tree.svg"].map(path => new URL(path, self.location.href).href);
 const INDEX_URL = new URL("./index.html", self.location.href).href;
 self.addEventListener("install", event => {
