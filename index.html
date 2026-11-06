@@ -4,13 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AR Drawing Free">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
 <title>AR Drawing Free</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1220;--panel:#151f30;--line:#26354a;--accent:#7c5cff;--muted:#9aabc2}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f8fc;font:15px system-ui,-apple-system,sans-serif}
 header{padding:18px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:20px;margin:0}header small{color:var(--muted)}
 main{max-width:900px;margin:auto;padding:10px 14px 32px}.tabs{display:flex;gap:8px;overflow:auto;padding:8px 0 14px}.tab,button,.filebtn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:12px;padding:11px 14px;font:inherit;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--accent);border-color:var(--accent)}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.stage{position:relative;background:#05080d;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:grid;place-items:center}.stage video,.stage canvas,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage canvas{touch-action:none}.stage .placeholder{color:var(--muted);text-align:center;padding:20px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}.controls label{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px}.controls input[type=range]{width:110px}.controls input[type=color]{width:38px;height:36px;border:0;background:none}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tile{background:#202d42;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:left;color:white}.tile b{display:block;margin-bottom:5px}.tile span{color:var(--muted);font-size:13px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}.stage{position:relative;background:#05080d;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:grid;place-items:center}.stage video,.stage canvas,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage #video{object-fit:cover}.stage #overlay{pointer-events:none;transform-origin:center center;max-width:100%;max-height:100%}.stage canvas{touch-action:none}.stage .placeholder{color:var(--muted);text-align:center;padding:20px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}.controls label{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px}.controls input[type=range]{width:110px}.controls input[type=color]{width:38px;height:36px;border:0;background:none}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tile{background:#202d42;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:left;color:white}.tile b{display:block;margin-bottom:5px}.tile span{color:var(--muted);font-size:13px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
@@ -24,31 +31,92 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
 <div class="panel"><h3>Choisir une image modèle</h3><p>Importe une photo ou un dessin depuis ton téléphone.</p><label class="filebtn">📁 Importer une image<input id="homeFile" type="file" accept="image/*" hidden></label><p id="fileStatus" style="color:var(--muted)">Aucune image sélectionnée.</p></div>
 </section>
 <section id="camera" class="page hidden"><div class="panel"><h2>Caméra AR</h2><div class="stage" id="cameraStage"><div class="placeholder" id="camHint">Lance la caméra puis importe ton modèle.</div><video id="video" autoplay playsinline muted></video><img id="overlay" class="hidden" alt="Image modèle"></div>
-<div class="controls"><button class="primary" id="startCam">Démarrer caméra</button><button id="stopCam">Arrêter</button><label>Opacité <input id="opacity" type="range" min="5" max="100" value="55"></label><label>Taille <input id="scale" type="range" min="40" max="160" value="100"></label><label class="filebtn">Importer modèle<input id="camFile" type="file" accept="image/*" hidden></label></div>
-<p style="color:var(--muted);font-size:13px">Autorise l’accès à la caméra. La caméra nécessite une connexion HTTPS et un navigateur compatible.</p></div></section>
+<div class="controls">
+<button class="primary" id="startCam">Démarrer caméra</button><button id="stopCam">Arrêter</button>
+<label>Opacité <input id="opacity" type="range" min="5" max="100" value="55"></label>
+<label>Zoom <input id="scale" type="range" min="40" max="180" value="100"></label>
+<label>Horizontal <input id="posX" type="range" min="-100" max="100" value="0"></label>
+<label>Vertical <input id="posY" type="range" min="-100" max="100" value="0"></label>
+<label>Rotation <input id="rotation" type="range" min="-180" max="180" value="0"></label>
+<button id="torch">🔦 Lampe</button>
+<label class="filebtn">Importer modèle<input id="camFile" type="file" accept="image/*" hidden></label>
+</div>
+<p id="cameraStatus" role="status" style="color:var(--muted);font-size:13px">La caméra nécessite HTTPS ou localhost et une autorisation du navigateur. La lampe dépend du téléphone.</p></div></section>
 <section id="draw" class="page hidden"><div class="panel"><h2>Dessin libre</h2><div class="stage" style="background:#fff;aspect-ratio:4/3"><canvas id="paper"></canvas></div><div class="controls"><label>Couleur <input id="color" type="color" value="#202020"></label><label>Épaisseur <input id="brush" type="range" min="1" max="30" value="4"></label><button id="erase">Gomme</button><button id="undo">Annuler</button><button id="clear">Effacer</button><button class="primary" id="save">Enregistrer PNG</button></div></div></section>
 <section id="learn" class="page hidden"><div class="panel"><h2>Petites leçons</h2><ol><li><b>Commence par les formes :</b> cercle, carré, triangle et lignes simples.</li><li><b>Observe les proportions :</b> repère la hauteur et la largeur de ton modèle.</li><li><b>Trace doucement :</b> commence par les contours avant les détails.</li><li><b>Travaille les ombres :</b> varie la pression et l’épaisseur des traits.</li><li><b>Entraîne-toi régulièrement :</b> 10 à 15 minutes par jour suffisent pour progresser.</li></ol></div></section>
 </main><footer>AR Drawing Free · Projet indépendant d’apprentissage du dessin.</footer>
 <script>
 const pages=[...document.querySelectorAll('.page')],tabs=[...document.querySelectorAll('.tab')];
-function go(id){pages.forEach(p=>p.classList.toggle('hidden',p.id!==id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.page===id));}
+function go(id){pages.forEach(p=>p.classList.toggle('hidden',p.id!==id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.page===id));if(id==='draw')requestAnimationFrame(resizeCanvas);}
 tabs.forEach(t=>t.onclick=()=>go(t.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 let modelUrl=null;const overlay=document.getElementById('overlay');
 function loadImage(file){if(!file)return;if(modelUrl)URL.revokeObjectURL(modelUrl);modelUrl=URL.createObjectURL(file);overlay.src=modelUrl;overlay.classList.remove('hidden');document.getElementById('fileStatus').textContent=file.name;}
 document.getElementById('homeFile').onchange=e=>loadImage(e.target.files[0]);document.getElementById('camFile').onchange=e=>loadImage(e.target.files[0]);
-document.getElementById('opacity').oninput=e=>overlay.style.opacity=e.target.value/100;
-document.getElementById('scale').oninput=e=>overlay.style.transform='scale('+e.target.value/100+')';
-let stream=null;const video=document.getElementById('video');
-document.getElementById('startCam').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});video.srcObject=stream;document.getElementById('camHint').classList.add('hidden')}catch(err){alert("Impossible d’ouvrir la caméra. Vérifie les autorisations du navigateur et utilise HTTPS.");}};
-document.getElementById('stopCam').onclick=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;video.srcObject=null;document.getElementById('camHint').classList.remove('hidden')};
+function updateOverlay(){
+  const x=document.getElementById('posX').value, y=document.getElementById('posY').value;
+  const z=document.getElementById('scale').value/100, r=document.getElementById('rotation').value;
+  overlay.style.opacity=document.getElementById('opacity').value/100;
+  overlay.style.transform='translate('+x+'%,'+y+'%) scale('+z+') rotate('+r+'deg)';
+}
+['opacity','scale','posX','posY','rotation'].forEach(id=>document.getElementById(id).addEventListener('input',updateOverlay));
+let stream=null, cameraTrack=null, torchOn=false;const video=document.getElementById('video');
+const cameraStatus=document.getElementById('cameraStatus');
+document.getElementById('startCam').onclick=async()=>{
+  try{
+    if(!navigator.mediaDevices?.getUserMedia)throw new Error('API caméra indisponible');
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    video.srcObject=stream;await video.play();
+    cameraTrack=stream.getVideoTracks()[0];document.getElementById('camHint').classList.add('hidden');
+    cameraStatus.textContent='Caméra active. Ajuste la position, le zoom et la transparence du modèle.';
+  }catch(err){
+    cameraStatus.textContent='Caméra inaccessible : vérifie HTTPS, les autorisations et qu’aucune autre application n’utilise la caméra.';
+  }
+};
+document.getElementById('stopCam').onclick=()=>{
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  stream=null;cameraTrack=null;torchOn=false;video.srcObject=null;
+  document.getElementById('camHint').classList.remove('hidden');
+  document.getElementById('torch').textContent='🔦 Lampe';
+  cameraStatus.textContent='Caméra arrêtée.';
+};
+document.getElementById('torch').onclick=async()=>{
+  if(!cameraTrack){cameraStatus.textContent='Démarre d’abord la caméra.';return;}
+  const caps=cameraTrack.getCapabilities?.();
+  if(!caps?.torch){cameraStatus.textContent='La lampe torche n’est pas prise en charge par ce navigateur ou cet appareil.';return;}
+  try{
+    torchOn=!torchOn;
+    await cameraTrack.applyConstraints({advanced:[{torch:torchOn}]});
+    document.getElementById('torch').textContent=torchOn?'🔦 Éteindre':'🔦 Lampe';
+    cameraStatus.textContent=torchOn?'Lampe activée.':'Lampe éteinte.';
+  }catch(err){
+    torchOn=false;cameraStatus.textContent='Le navigateur a refusé de contrôler la lampe.';
+  }
+};
 const canvas=document.getElementById('paper'),ctx=canvas.getContext('2d');let drawing=false,erase=false,history=[];
-function setup(){const r=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1;canvas.width=r.width*d;canvas.height=r.height*d;ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,r.height);ctx.lineCap='round';ctx.lineJoin='round'}setup();window.addEventListener('resize',()=>{});
+let canvasReady=false;
+function resizeCanvas(){
+  const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;
+  const previous=canvasReady?canvas.toDataURL('image/png'):null;
+  const d=window.devicePixelRatio||1;canvas.width=Math.round(r.width*d);canvas.height=Math.round(r.height*d);
+  ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,r.height);
+  ctx.lineCap='round';ctx.lineJoin='round';canvasReady=true;
+  if(previous){const im=new Image();im.onload=()=>ctx.drawImage(im,0,0,r.width,r.height);im.src=previous;}
+}
+window.addEventListener('resize',()=>{if(!document.getElementById('draw').classList.contains('hidden'))resizeCanvas();});
 function point(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
-canvas.onpointerdown=e=>{drawing=true;canvas.setPointerCapture(e.pointerId);history.push(canvas.toDataURL());const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y)};
+canvas.onpointerdown=e=>{if(!canvasReady)return;drawing=true;canvas.setPointerCapture(e.pointerId);history.push(canvas.toDataURL());if(history.length>50)history.shift();const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y)};
 canvas.onpointermove=e=>{if(!drawing)return;const p=point(e);ctx.strokeStyle=erase?'#fff':document.getElementById('color').value;ctx.lineWidth=+document.getElementById('brush').value;ctx.lineTo(p.x,p.y);ctx.stroke()};
 canvas.onpointerup=canvas.onpointercancel=()=>drawing=false;
 document.getElementById('erase').onclick=()=>{erase=!erase;document.getElementById('erase').textContent=erase?'Gomme activée':'Gomme'};
-document.getElementById('undo').onclick=()=>{const src=history.pop();if(!src)return;const im=new Image();im.onload=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(im,0,0,canvas.width/(devicePixelRatio||1),canvas.height/(devicePixelRatio||1))};im.src=src};
-document.getElementById('clear').onclick=()=>{if(confirm('Effacer le dessin ?')){history.push(canvas.toDataURL());setup()}};
-document.getElementById('save').onclick=()=>{const a=document.createElement('a');a.download='mon-dessin.png';a.href=canvas.toDataURL('image/png');a.click()};
+document.getElementById('undo').onclick=()=>{const src=history.pop();if(!src)return;const im=new Image();im.onload=()=>{const r=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1;ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,r.height);ctx.drawImage(im,0,0,r.width,r.height)};im.src=src};
+document.getElementById('clear').onclick=()=>{if(confirm('Effacer le dessin ?')){history.push(canvas.toDataURL());const r=canvas.getBoundingClientRect();ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,r.height)}};
+document.getElementById('save').onclick=()=>{
+  try{
+    const a=document.createElement('a');a.download='mon-dessin.png';a.href=canvas.toDataURL('image/png');
+    document.body.appendChild(a);a.click();a.remove();
+  }catch(err){alert('Impossible de préparer le PNG sur cet appareil.');}
+};
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
 </script></body></html>
