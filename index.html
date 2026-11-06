@@ -50,7 +50,7 @@ const pages=[...document.querySelectorAll('.page')],tabs=[...document.querySelec
 function go(id){pages.forEach(p=>p.classList.toggle('hidden',p.id!==id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.page===id));if(id==='draw')requestAnimationFrame(resizeCanvas);}
 tabs.forEach(t=>t.onclick=()=>go(t.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 let modelUrl=null;const overlay=document.getElementById('overlay');
-function loadImage(file){if(!file)return;if(modelUrl)URL.revokeObjectURL(modelUrl);modelUrl=URL.createObjectURL(file);overlay.src=modelUrl;overlay.classList.remove('hidden');document.getElementById('fileStatus').textContent=file.name;}
+function loadImage(file){if(!file)return;if(modelUrl)URL.revokeObjectURL(modelUrl);modelUrl=URL.createObjectURL(file);overlay.src=modelUrl;overlay.classList.remove('hidden');document.getElementById('fileStatus').textContent=file.name;updateOverlay();}
 document.getElementById('homeFile').onchange=e=>loadImage(e.target.files[0]);document.getElementById('camFile').onchange=e=>loadImage(e.target.files[0]);
 function updateOverlay(){
   const x=document.getElementById('posX').value, y=document.getElementById('posY').value;
@@ -63,6 +63,7 @@ let stream=null, cameraTrack=null, torchOn=false;const video=document.getElement
 const cameraStatus=document.getElementById('cameraStatus');
 document.getElementById('startCam').onclick=async()=>{
   try{
+    if(stream)stream.getTracks().forEach(t=>t.stop());
     if(!navigator.mediaDevices?.getUserMedia)throw new Error('API caméra indisponible');
     stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
     video.srcObject=stream;await video.play();
